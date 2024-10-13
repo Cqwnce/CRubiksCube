@@ -10,9 +10,6 @@ void printCube(char cube[6][3][3]);
 
 int main(int argc, char *argv[])
 {
-
-    rotateClockwiseF();
-
     // define cube as a 3d array, 3x3 grid with 6 faces
     // face 0: green/front | face 1: blue/back | face 2: red/left | face 3: orange/right | face 4: yellow/up | face 5: white/down
     char cube[6][3][3] = {
@@ -33,6 +30,11 @@ int main(int argc, char *argv[])
 
         // face 5: white / D
         {{'w', 'w', 'w'}, {'w', 'w', 'w'}, {'w', 'w', 'w'}}};
+
+    if (argc != 2) {
+        printf("Usage: ./program print");
+        return 0;
+    }
 
     if (strcmp(argv[1], "print") == 0)
     {
