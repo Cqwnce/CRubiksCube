@@ -21,6 +21,6 @@ int main(int argc, char *argv[])
     }
 
     // define cube object
-    CornerCubie corners[8];
-    EdgeCubie edges[12];
+    CornerCubie corners;
+    EdgeCubie edges;
 }

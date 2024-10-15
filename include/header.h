@@ -9,7 +9,7 @@ typedef struct
 {
     int position;    /*0 = upper front left corner of green face (UFL), 1-3 clockwise,
                         4 = upper right back corner of green (front face is blue) (UBR), 5-7 clockwise*/
-    int orientation; // 0 = correct orientation, 1 = twisted left, 2 =  twisted right
+    int orientation; // 0 = correct orientation, 1 = twisted clockwise, 2 =  twisted anticlockwise
 } CornerCubie;
 
 // define 12 edge cubies, 0-11 indexed
@@ -21,7 +21,7 @@ typedef struct
 } EdgeCubie;
 
 // Function prototypes for sticker retrieval
-char getCornerSticker(CornerCubie corner, int face);
-char getEdgeSticker(EdgeCubie edge, int face);
+char getCornerSticker(CornerCubie corner, int stickerFace);
+char getEdgeSticker(EdgeCubie edge, int stickerFace);
 
 #endif
