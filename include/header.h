@@ -24,7 +24,7 @@ typedef struct
 typedef struct
 {
     int position;    /*0 = upper front edge of green face (UF), 1-3 going clockwise,
-                        4 = upper left middle (ULM), 5-7 going clockwise  8 = upper back (UB), 9-11 clockwise. */
+                        4 = upper left  (UL), 5-7 going clockwise  8 = upper back (UB), 9-11 clockwise. */
 
     int orientation; // 0 = correct orientation, 1 = flipped
 } EdgeCubie;
@@ -45,12 +45,12 @@ int corner_positions[6][4] =
     indexed in a ⭍ shape pattern. */
 int edge_positions[6][4] = 
 {
-    {0, 4, 5, 8}, // U (yellow) face
-    {2, 6, 7, 8}, // D (white) face
-    {0, 1, 2, 3}, // F (green) face
-    {8, 9, 10, 11}, // B (blue) face
-    {3, 4, 7, 11}, // L (red) face
-    {1, 5, 6, 9}, // R (orange) face
+    {8, 4, 5, 0}, // U (yellow) face
+    {2, 7, 6, 10}, // D (white) face
+    {0, 3, 1, 2}, // F (green) face
+    {8, 9, 11, 10}, // B (blue) face
+    {4, 7, 11, 3}, // L (red) face
+    {5, 1, 9, 6}, // R (orange) face
 };
 
 // centers of each face
