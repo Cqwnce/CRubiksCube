@@ -1,14 +1,13 @@
 #include <stdio.h>
-#include "header.h"
 
-char getCornerSticker(int cornerIndex, int stickerFace)
+char getCornerSticker(int cornerIndex, int stickerOrientation)
 {
     // Define colors of each sticker of a corner cubies
     // Front (F) face is Green, Bottom (B) face is white
     char colors[8][3] = // 8 corner cubies, each have 3 stickers
         {
             /*index of each color based on reference facelets (Refer header.h)
-            e.g color[0] is color of reference facelet relative to clean cube when orientation 0*/ 
+            e.g color[0] is color of reference facelet relative to clean cube when orientation 0*/
 
             {'y', 'r', 'g'}, // ULF
             {'y', 'g', 'o'}, // UFR
@@ -20,10 +19,10 @@ char getCornerSticker(int cornerIndex, int stickerFace)
             {'w', 'r', 'b'}, // BDL
         };
 
-    return colors[cornerIndex][stickerFace];
-};
+    return colors[cornerIndex][stickerOrientation];
+}
 
-char getEdgeSticker(EdgeCubie edge, int stickerFace)
+char getEdgeSticker(int edgeIndex, int stickerOrientation)
 {
     // Define colors of each sticker of an edge cubie
     // Front (F) face is Green
@@ -43,29 +42,5 @@ char getEdgeSticker(EdgeCubie edge, int stickerFace)
             {'b', 'r'}, // BL
         };
 
-    return colors[edge.position][stickerFace];
-};
-
-void printFace(CornerCubie corners[8], EdgeCubie edges[12], int face)
-{
-    // loop through each CORNER POSITIONS of the FACE (each face has 4 corners)
-    for (int i = 0; i < 4; i++)
-    {
-        // loop through each cornerCubies
-        for (int j = 0; j < 8; j++)
-        {
-            // get CORNER POSITIONS for U (index 0 of corner_positions 2d array)
-            int currentFacePosition = corner_positions[face][i];
-
-            // if the cubie is in a position that is on the U
-            if (corners[i].p = currentFacePosition)
-            {
-                char color = getCornerSticker(i, 0);
-            }
-            else
-            {
-               continue;
-            };
-        };
-    };
-};
+    return colors[edgeIndex][stickerOrientation];
+}
