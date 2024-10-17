@@ -20,7 +20,21 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    // define cube object
-    CornerCubie corners;
-    EdgeCubie edges;
+    // define cubies object, initialise all cubies to solved state
+    CornerCubie corners[8] =
+        {
+            {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}
+        };
+
+    EdgeCubie edges[12] =
+        {
+            {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}
+        };
+
+}
+
+void printCube(CornerCubie corners[8], EdgeCubie edges[12])
+{
+    int face = 0; // 0 indexed face, U
+    printFace(corners[8], edges[12], face);
 }
