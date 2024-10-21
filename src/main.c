@@ -44,33 +44,10 @@ void printFace(CornerCubie corners[8], EdgeCubie edges[12], int face, bool newLi
         for (int j = 0; j < 8; j++)
         {
             // Check if CORNER Cubie is in position of current Face
-            if (corners[j].p == faceCornerPosition)
+            if (corners[j].position == faceCornerPosition)
             {
                 // Print sticker color of cubie, depending on orientation
-                char color = getCornerSticker(j, corners[j].o);
-                printf("%c", color);
-                break;
-            };
-        };
-
-        // Formatting
-        if (i == 1 || i == 2)
-        {
-            printf("\n");
-        }
-        else
-        {
-            printf(" ");
-        }
-
-        // loop through each edgeCubies (k)
-        for (int k = 0; k < 12; k++)
-        {
-            // Check if EDGE Cubie is in position of current Face
-            if (edges[k].p == faceEdgePosition)
-            {
-                // Print sticker color of cubie, depending on orientation
-                char color = getEdgeSticker(k, edges[k].o);
+                char color = getCornerSticker(j, corners[j].orientation);
                 printf("%c", color);
                 break;
             };
@@ -78,10 +55,59 @@ void printFace(CornerCubie corners[8], EdgeCubie edges[12], int face, bool newLi
 
         // Formatting
         printf(" ");
+
+        // Special case for middle row 
         if (i == 1)
         {
+            printf("\n");
+
+            for (int k = 0; k < 12; k++)
+            {
+                // Check if EDGE Cubie is in position of current Face
+                if (edges[k].position == faceEdgePosition)
+                {
+                    // Print sticker color of cubie, depending on orientation
+                    char color = getEdgeSticker(k, edges[k].orientation);
+                    printf("%c", color);
+                    break;
+                };
+            };
+
+            printf(" ");
+
+            // Print center
             printf("%c ", centers[face]);
+
+            for (int k = 0; k < 12; k++)
+            {
+                // Check if EDGE Cubie is in position 2 of current Face
+                if (edges[k].position == edge_positions[face][2])
+                {
+                    // Print sticker color of cubie, depending on orientation
+                    char color = getEdgeSticker(k, edges[k].orientation);
+                    printf("%c", color);
+                };
+            };
+            printf("\n");
+            continue;
         };
+
+        // loop through each edgeCubies (k)
+        for (int k = 0; k < 12; k++)
+        {
+            // Check if EDGE Cubie is in position of current Face
+            if (edges[k].position == faceEdgePosition)
+            {
+                // Print sticker color of cubie, depending on orientation
+                char color = getEdgeSticker(k, edges[k].orientation);
+                printf("%c", color);
+                break;
+            };
+        };
+
+        // Formatting
+        printf(" ");
+
     };
 }
 

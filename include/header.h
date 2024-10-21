@@ -13,19 +13,19 @@
 
 typedef struct
 {
-    int p; /* POSITION OF CUBIE 0 = upper front left corner of green face (UFL), 1-3 clockwise,
+    int position; /* POSITION OF CUBIE 0 = upper front left corner of green face (UFL), 1-3 clockwise,
                  4 = upper right back corner of green (front face is blue) (UBR), 5-7 clockwise. */
 
-    int o; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = twisted clockwise, 2 = twisted anticlockwise.
+    int orientation; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = twisted clockwise, 2 = twisted anticlockwise.
 } CornerCubie;
 
 // define 12 edge cubies, 0-11 indexed
 typedef struct
 {
-    int p; /* POSITION OF CUBIE 0 = upper front edge of green face (UF), 1-3 going clockwise,
+    int position; /* POSITION OF CUBIE 0 = upper front edge of green face (UF), 1-3 going clockwise,
              4 = upper left  (UL), 5-7 going clockwise  8 = upper back (UB), 9-11 clockwise. */
 
-    int o; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = flipped
+    int orientation; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = flipped
 } EdgeCubie;
 
 /*Positions of corner cubies making up each face,
