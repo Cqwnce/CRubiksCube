@@ -44,3 +44,39 @@ char getEdgeSticker(int edgeIndex, int stickerOrientation)
 
     return colors[edgeIndex][stickerOrientation];
 }
+
+int adjustCornerOrientation(int cornerIndex, int orientation, int face)
+{
+    int orientationOffsets[6][4] = {
+
+        // Adjustments for each face to get sticker
+        {0, 0, 0, 0}, // U (yellow) face (no adjustment needed)
+        {0, 0, 0, 0}, // D (white) face
+        {2, 1, 1, 2}, // F (green) face
+        {2, 1, 1, 2}, // B (blue) face
+        {2, 1, 1, 2}, // L (red) face
+        {2, 1, 1, 2}  // R (orange) face
+    };
+
+    int newOrientation = (orientation + orientationOffsets[face][cornerIndex]) % 3;
+
+    return newOrientation;
+}
+
+int adjustEdgeOrientation(int EdgeIndex, int orientation, int face)
+{
+    int orientationOffsets[6][4] = {
+
+        // Adjustments for each face to get sticker
+        {0, 0, 0, 0}, // U (yellow) face (no adjustment needed)
+        {0, 0, 0, 0}, // D (white) face
+        {1, 0, 0, 1}, // F (green) face
+        {1, 0, 0, 1}, // B (blue) face
+        {1, 1, 1, 1}, // L (red) face
+        {1, 1, 1, 1}  // R (orange) face
+    };
+
+    int newOrientation = (orientation + orientationOffsets[face][EdgeIndex]) % 2;
+
+    return newOrientation;
+}

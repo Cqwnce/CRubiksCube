@@ -2,20 +2,21 @@
 #define HEADER_H
 
 /* Define a Rubik's cube as a data structure combination of 6 fixed centers,
-    8 corner cubies and 12 edge cubies.
-
-    Orientation is based on reference facelets,
-    as dictated in https://kociemba.org/math/cubielevel.htm
-
-    (Colors have been changed such that F is green and U is yellow on a clean cube instead) */
-
+*   8 corner cubies and 12 edge cubies.
+*
+*   Orientation is based on reference facelets,
+*   as dictated in https://kociemba.org/math/cubielevel.htm
+*
+*   (Colors have been changed such that F is green and U is yellow on a clean cube instead) 
+*/
+    
 // define 8 corner cubies, 0-7 indexed
 
 typedef struct
 {
     int position; /* POSITION OF CUBIE 0 = upper front left corner of green face (UFL), 1-3 clockwise,
-                 4 = upper right back corner of green (front face is blue) (UBR), 5-7 clockwise. */
-
+                    4 = upper right back corner of green (front face is blue) (UBR), 5-7 clockwise. 
+                */
     int orientation; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = twisted clockwise, 2 = twisted anticlockwise.
 } CornerCubie;
 
@@ -23,13 +24,14 @@ typedef struct
 typedef struct
 {
     int position; /* POSITION OF CUBIE 0 = upper front edge of green face (UF), 1-3 going clockwise,
-             4 = upper left  (UL), 5-7 going clockwise  8 = upper back (UB), 9-11 clockwise. */
-
+                    4 = upper left  (UL), 5-7 going clockwise  8 = upper back (UB), 9-11 clockwise. 
+                */
     int orientation; // ORIENTATION OF CUBIE 0 = correct orientation, 1 = flipped
 } EdgeCubie;
 
-/*Positions of corner cubies making up each face,
-    indexed in a Z shape pattern. */
+/*  Positions of corner cubies making up each face,
+    indexed in a Z shape pattern. 
+*/
 int corner_positions[6][4] =
     {
         {4, 5, 0, 1}, // U (yellow) face
@@ -40,8 +42,9 @@ int corner_positions[6][4] =
         {1, 5, 2, 6}, // R (orange) face
 };
 
-/* Positions of edge cubies making up each face,
-    indexed in a ⭍ shape pattern. */
+/*  Positions of edge cubies making up each face,
+    indexed in a ⭍ shape pattern. 
+*/
 int edge_positions[6][4] =
     {
         {8, 4, 5, 0},   // U (yellow) face
@@ -63,5 +66,7 @@ void printCube(CornerCubie corners[8], EdgeCubie edges[12]);
 
 char getCornerSticker(int cornerIndex, int stickerOrientation);
 char getEdgeSticker(int edgeIndex, int stickerOrientation);
+int adjustCornerOrientation(int cornerIndex, int orientation, int face);
+int adjustEdgeOrientation(int EdgeIndex, int orientation, int face);
 
 #endif
