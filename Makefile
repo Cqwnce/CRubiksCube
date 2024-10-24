@@ -1,21 +1,24 @@
 CC = gcc
 CFLAGS = -I./include  # Include directory for header files
-SRC = ./src/main.c ./src/stickers.c
-OBJ = main.o stickers.o
-TARGET = rubiks_cube
+SRC_DIR = ./src
+BUILD_DIR = ./build
+SRC = $(SRC_DIR)/main.c $(SRC_DIR)/stickers.c $(SRC_DIR)/permutations.c
+OBJ = $(BUILD_DIR)/main.o $(BUILD_DIR)/stickers.o $(BUILD_DIR)/permutations.o
+EXEC = rubiks_cube  # Name of the final executable
 
-all: $(TARGET)
+all: $(EXEC)
 
-$(TARGET): $(OBJ)
-	$(CC) -o $(TARGET) $(OBJ) $(CFLAGS)
+$(EXEC): $(OBJ)
+	$(CC) $(OBJ) -o $(EXEC)
 
-# Rule to compile main.c into main.o
-main.o: ./src/main.c
-	$(CC) -c ./src/main.c -o main.o $(CFLAGS)
+$(BUILD_DIR)/main.o: $(SRC_DIR)/main.c
+	$(CC) -c $(SRC_DIR)/main.c -o $(BUILD_DIR)/main.o $(CFLAGS)
 
-# Rule to compile stickers.c into stickers.o
-stickers.o: ./src/stickers.c
-	$(CC) -c ./src/stickers.c -o stickers.o $(CFLAGS)
+$(BUILD_DIR)/stickers.o: $(SRC_DIR)/stickers.c
+	$(CC) -c $(SRC_DIR)/stickers.c -o $(BUILD_DIR)/stickers.o $(CFLAGS)
+
+$(BUILD_DIR)/permutations.o: $(SRC_DIR)/permutations.c
+	$(CC) -c $(SRC_DIR)/permutations.c -o $(BUILD_DIR)/permutations.o $(CFLAGS)
 
 clean:
-	rm -f *.o $(TARGET)
+	rm -rf $(BUILD_DIR)/*.o $(EXEC)
