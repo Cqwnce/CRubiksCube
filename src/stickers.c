@@ -4,6 +4,7 @@
 */
 int corner_positions[6][4] =
     {
+        // default colors written beside
         {4, 5, 0, 1}, // U (yellow) face
         {3, 2, 7, 6}, // D (white) face
         {0, 1, 3, 2}, // F (green) face
@@ -17,18 +18,13 @@ int corner_positions[6][4] =
 */
 int edge_positions[6][4] =
     {
+        // default colors written beside
         {8, 4, 5, 0},   // U (yellow) face
         {2, 7, 6, 10},  // D (white) face
         {0, 3, 1, 2},   // F (green) face
         {8, 9, 11, 10}, // B (blue) face
         {4, 11, 3, 7},  // L (red) face
         {5, 1, 9, 6},   // R (orange) face
-};
-
-// centers of each face
-char centers[6] =
-    {
-        'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
 };
 
 char getCornerSticker(int cornerIndex, int stickerOrientation)

@@ -11,7 +11,6 @@
 *   (Colors have been changed such that F is green and U is yellow on a clean cube instead) 
 */
     
-
 typedef struct
 {
     int position; /* 0-7 for corners| 0-12 for edges
@@ -23,23 +22,38 @@ typedef struct
 // Declare external arrays
 extern int corner_positions[6][4];
 extern int edge_positions[6][4];
+extern Cubie corners[8];
+extern Cubie edges[12];
 extern char centers[6];
 
 // Function prototypes
-void printCube(Cubie corners[8], Cubie edges[12]);
 
+// main.c
+void printCube();
+void performMovesets(char move, char modifier);
+
+// stickers.c
 char getCornerSticker(int cornerIndex, int stickerOrientation);
 char getEdgeSticker(int edgeIndex, int stickerOrientation);
 int adjustCornerOrientation(int cornerIndex, int orientation, int face);
 int adjustEdgeOrientation(int EdgeIndex, int orientation, int face);
 
-// Function prototype
-void permuteF(Cubie corners[8], Cubie edges[12]);
+// permutations.c
+void permuteF(void);
+void permuteFprime(void);
+void permuteB(void);
+void permuteBprime(void);
+void permuteU(void);
+void permuteUprime(void);
+void permuteD(void);
+void permuteDprime(void);
+void permuteL(void);
+void permuteLprime(void);
+void permuteR(void);
+void permuteRprime(void);
 
-void permuteCycle(Cubie corners[8], Cubie edges[12], 
-    int newCornerPositions[4], int newEdgePositions[4], int face,
+void permuteCycle(int newCornerPositions[4], int newEdgePositions[4], int face,
         int newCornerOrientations[4], int newEdgeOrientations[4]);
-        
 bool checkModified(int modifiedCubies[4], int j);
 
 

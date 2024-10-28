@@ -5,20 +5,29 @@
 
 #include "header.h"
 
+// define cubies object, initialise all cubies to solved state
+Cubie corners[8] =
+    {
+        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}
+    };
+
+Cubie edges[12] =
+    {
+        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}
+    };
+
+// centers of each face
+char centers[6] =
+    {
+        'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
+};
+
+
 int main(void)
 {
-    // define cubies object, initialise all cubies to solved state
-    Cubie corners[8] =
-        {
-            {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}};
-
-    Cubie edges[12] =
-        {
-            {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}};
-
     printCube(corners, edges);
 
-    char input[25];
+    char input[10];
 
     while (1) 
     {
@@ -32,7 +41,7 @@ int main(void)
         {
             printf("\n--------------------------------\n");
             printf("Moves:\n(F, B, U, D, L, R, M)\n");
-            printf("\nSuffixes:\n");
+            printf("\nModifiers:\n");
             printf("(') for counterclockwise e.g. F'.\n");
             printf("(2) for 2 moves e.g. F2.\n");
             printf("\nMiscellaneous:\n");
@@ -46,9 +55,15 @@ int main(void)
             break; // Exit the loop
         }
 
-        if (strcmp(input, "F") == 0) 
+        if (strlen(input) == 1)
         {
-            permuteF(corners, edges);
+            performMovesets(input[0], '\0');
+            printCube(corners, edges);
+            continue;
+        } 
+        else if (strlen(input) == 2)
+        {
+            performMovesets(input[0], input[1]);
             printCube(corners, edges);
             continue;
         }
@@ -59,7 +74,7 @@ int main(void)
     return 0;
 }
 
-void printFirstRow(Cubie corners[8], Cubie edges[12], int face)
+void printFirstRow(int face)
 {
     int i = 0;
 
@@ -109,7 +124,7 @@ void printFirstRow(Cubie corners[8], Cubie edges[12], int face)
     };
 }
 
-void printSecondRow(Cubie corners[8], Cubie edges[12], int face)
+void printSecondRow(int face)
 {
     // loop through each Edge Cubies (k)
     for (int i = 1; i <= 2; i++)
@@ -135,7 +150,7 @@ void printSecondRow(Cubie corners[8], Cubie edges[12], int face)
     }
 }
 
-void printThirdRow(Cubie corners[8], Cubie edges[12], int face)
+void printThirdRow(int face)
 {
     int i = 2;
     int faceCornerPosition = corner_positions[face][i];
@@ -183,52 +198,158 @@ void printThirdRow(Cubie corners[8], Cubie edges[12], int face)
 
 }
 
-void printCube(Cubie corners[8], Cubie edges[12])
+void printCube(void)
 {
     // 0 indexed face, U
     printf("      ");
-    printFirstRow(corners, edges, 0);
+    printFirstRow(0);
     printf("\n");
     printf("      ");
-    printSecondRow(corners, edges, 0);
+    printSecondRow(0);
     printf("\n");
     printf("      ");
-    printThirdRow(corners, edges, 0);
+    printThirdRow(0);
     printf("\n");
 
     // 4, 2, 5, 3 face (L, F, R, B)
 
     // First row
-    printFirstRow(corners, edges, 4);
-    printFirstRow(corners, edges, 2);
-    printFirstRow(corners, edges, 5);
-    printFirstRow(corners, edges, 3);
+    printFirstRow(4);
+    printFirstRow(2);
+    printFirstRow(5);
+    printFirstRow(3);
     printf("\n");
 
     // Second row
-    printSecondRow(corners, edges, 4);
-    printSecondRow(corners, edges, 2);
-    printSecondRow(corners, edges, 5);
-    printSecondRow(corners, edges, 3);
+    printSecondRow(4);
+    printSecondRow(2);
+    printSecondRow(5);
+    printSecondRow(3);
     printf("\n");
 
     // Third row
-    printThirdRow(corners, edges, 4);
-    printThirdRow(corners, edges, 2);
-    printThirdRow(corners, edges, 5);
-    printThirdRow(corners, edges, 3);
+    printThirdRow(4);
+    printThirdRow(2);
+    printThirdRow(5);
+    printThirdRow(3);
     printf("\n");
 
     // 1 indexed face, D
     printf("      ");
-    printFirstRow(corners, edges, 1);
+    printFirstRow(1);
     printf("\n");
     printf("      ");
-    printSecondRow(corners, edges, 1);
+    printSecondRow(1);
     printf("\n");
     printf("      ");
-    printThirdRow(corners, edges, 1);
+    printThirdRow(1);
     printf("\n");
 }
 
+void performMovesets(char move, char modifier)
+{
+    // Switch case for face of move
+    switch (move)
+    {
+        case 'F':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteFprime();
+            }
+            else
+            {
+                permuteF();
+            }
+            break;
+
+        case 'B':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteBprime();
+            }
+            else
+            {
+                permuteB();
+            }
+            break;
+
+        case 'U':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteUprime();
+            }
+            else
+            {
+                permuteU();
+            }
+            break;
+
+        case 'D':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteDprime();
+            }
+            else
+            {
+                permuteD();
+            }
+            break;
+
+        case 'L':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteLprime();
+            }
+            else
+            {
+                permuteL();
+            }
+            break;
+            
+        case 'R':
+            if (modifier == '2')
+            {
+                // TODO
+                return;
+            }
+            else if (modifier == '\'')
+            {
+                permuteRprime();
+            }
+            else
+            {
+                permuteR();
+            }
+            break;
+
+        default:
+            printf("Invalid move.\n");
+            break;
+    };
+}
 
