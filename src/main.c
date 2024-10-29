@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #include "header.h"
 
@@ -16,7 +17,7 @@ Cubie edges[12] =
         {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}
     };
 
-// centers of each face
+// centers of each face, initialised to solved state
 char centers[6] =
     {
         'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
@@ -25,7 +26,7 @@ char centers[6] =
 
 int main(void)
 {
-    printCube(corners, edges);
+    printCube();
 
     char input[10];
 
@@ -57,17 +58,19 @@ int main(void)
 
         if (strlen(input) == 1)
         {
-            performMovesets(input[0], '\0');
-            printCube(corners, edges);
+            performMovesets(toupper(input[0]), '\0');
+            printCube();
             continue;
         } 
         else if (strlen(input) == 2)
         {
-            performMovesets(input[0], input[1]);
-            printCube(corners, edges);
-            continue;
+            if (input[1] == '2' || input[1] == '\'')
+            {
+                performMovesets(toupper(input[0]), input[1]);
+                printCube();
+                continue;
+            }
         }
-
         printf("Invalid input.\n");
     }
 
@@ -254,8 +257,7 @@ void performMovesets(char move, char modifier)
         case 'F':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteF2();
             }
             else if (modifier == '\'')
             {
@@ -270,8 +272,7 @@ void performMovesets(char move, char modifier)
         case 'B':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteB2();
             }
             else if (modifier == '\'')
             {
@@ -286,8 +287,7 @@ void performMovesets(char move, char modifier)
         case 'U':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteU2();
             }
             else if (modifier == '\'')
             {
@@ -302,8 +302,7 @@ void performMovesets(char move, char modifier)
         case 'D':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteD2();
             }
             else if (modifier == '\'')
             {
@@ -318,8 +317,7 @@ void performMovesets(char move, char modifier)
         case 'L':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteL2();
             }
             else if (modifier == '\'')
             {
@@ -334,8 +332,7 @@ void performMovesets(char move, char modifier)
         case 'R':
             if (modifier == '2')
             {
-                // TODO
-                return;
+                permuteR2();
             }
             else if (modifier == '\'')
             {
@@ -346,6 +343,22 @@ void performMovesets(char move, char modifier)
                 permuteR();
             }
             break;
+
+        case 'M':
+            if (modifier == '2')
+            {
+                permuteM2();
+            }
+            else if (modifier == '\'')
+            {
+                permuteMprime();
+            }
+            else
+            {
+                permuteM();
+            }
+            break;
+
 
         default:
             printf("Invalid move.\n");

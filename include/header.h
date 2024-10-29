@@ -41,16 +41,31 @@ int adjustEdgeOrientation(int EdgeIndex, int orientation, int face);
 // permutations.c
 void permuteF(void);
 void permuteFprime(void);
+void permuteF2(void);
+
 void permuteB(void);
 void permuteBprime(void);
+void permuteB2(void);
+
 void permuteU(void);
 void permuteUprime(void);
+void permuteU2(void);
+
 void permuteD(void);
 void permuteDprime(void);
+void permuteD2(void);
+
 void permuteL(void);
 void permuteLprime(void);
+void permuteL2(void);
+
 void permuteR(void);
 void permuteRprime(void);
+void permuteR2(void);
+
+void permuteM(void);
+void permuteMprime(void);
+void permuteM2(void);
 
 void permuteCycle(int newCornerPositions[4], int newEdgePositions[4], int face,
         int newCornerOrientations[4], int newEdgeOrientations[4]);

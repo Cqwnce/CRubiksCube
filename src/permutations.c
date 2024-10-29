@@ -57,6 +57,35 @@ void permuteCycle(int newCornerPositions[4], int newEdgePositions[4], int face,
     }
 }
 
+void permuteCycleSlice(int newPositions[4], int orientationOffset)
+{
+    int oldPositions[4] = {0, 2, 8, 10};
+    int modifiedEdge[4] = {13, 13, 13, 13};
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 12; j++)
+        {
+            // Check if cubie was already modified
+            if(checkModified(modifiedEdge, j))
+            {
+                continue;
+            }
+
+            // If edge cubie is IN POSITION, update edges
+            if (edges[j].position == oldPositions[i])
+            {
+                modifiedEdge[i] = j;
+
+                edges[j].position = newPositions[i];
+                edges[j].orientation = (edges[j].orientation + orientationOffset) % 2;
+                break;
+            }
+
+        }
+    }
+}
+
 bool checkModified(int modifiedCubies[4], int j)
 {
     for (int i = 0; i < 4; i++)
@@ -95,6 +124,19 @@ void permuteFprime(void)
          2, newCornerOrientations, newEdgeOrientations);
 }
 
+void permuteF2(void)
+{
+    int newCornerPositions[4] = {2, 3, 1, 0};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {2, 1, 3, 0};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         2, newCornerOrientations, newEdgeOrientations);
+
+}
+
 // B
 void permuteB(void)
 {
@@ -118,6 +160,19 @@ void permuteBprime(void)
 
     permuteCycle(newCornerPositions, newEdgePositions,
          3, newCornerOrientations, newEdgeOrientations);
+}
+
+void permuteB2(void)
+{
+    int newCornerPositions[4] = {7, 6, 4, 5};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {10, 11, 9, 8};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         3, newCornerOrientations, newEdgeOrientations);
+
 }
 
 // U
@@ -145,6 +200,19 @@ void permuteUprime(void)
          0, newCornerOrientations, newEdgeOrientations);
 }
 
+void permuteU2(void)
+{
+    int newCornerPositions[4] = {1, 0, 5, 4};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {0, 5, 4, 8};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         0, newCornerOrientations, newEdgeOrientations);
+
+}
+
 // D
 void permuteD(void)
 {
@@ -168,6 +236,19 @@ void permuteDprime(void)
 
     permuteCycle(newCornerPositions, newEdgePositions,
          1, newCornerOrientations, newEdgeOrientations);
+}
+
+void permuteD2(void)
+{
+    int newCornerPositions[4] = {6, 7, 2, 3};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {10, 6, 7, 2};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         1, newCornerOrientations, newEdgeOrientations);
+
 }
 
 // L
@@ -195,6 +276,19 @@ void permuteLprime(void)
          4, newCornerOrientations, newEdgeOrientations);
 }
 
+void permuteL2(void)
+{
+    int newCornerPositions[4] = {3, 7, 0, 4};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {7, 3, 11, 4};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         4, newCornerOrientations, newEdgeOrientations);
+
+}
+
 // R
 void permuteR(void)
 {
@@ -219,6 +313,77 @@ void permuteRprime(void)
     permuteCycle(newCornerPositions, newEdgePositions,
          5, newCornerOrientations, newEdgeOrientations);
 }
+
+void permuteR2(void)
+{
+    int newCornerPositions[4] = {6, 2, 5, 1};
+    int newCornerOrientations[4] = {0, 0, 0, 0};
+
+    int newEdgePositions[4] = {6, 9, 1, 5};
+    int newEdgeOrientations[4] = {0, 0, 0, 0};
+
+    permuteCycle(newCornerPositions, newEdgePositions,
+         5, newCornerOrientations, newEdgeOrientations);
+
+}
+
+// M (special slice move)
+void permuteM(void)
+{
+    // swap centers in following order:
+    // 2->0 | 0->3 | 1->2 | 3->1
+    char temp;
+    temp = centers[2];
+
+    centers[2] = centers[0];
+    centers[0] = centers[3];
+    centers[3] = centers[1];
+    centers[1] = temp;
+
+    // swap edges
+    int newPositions[4] = {2, 10, 0, 8};
+
+    permuteCycleSlice(newPositions, 1);
+}
+
+void permuteMprime(void)
+{
+    // swap centers in following order:
+    // 2->1 | 1->3 | 3->0 | 0->2 |
+    char temp;
+    temp = centers[2];
+
+    centers[2] = centers[1];
+    centers[1] = centers[3];
+    centers[3] = centers[0];
+    centers[0] = temp;
+
+    // swap edges
+    int newPositions[4] = {8, 0, 10, 2};
+
+    permuteCycleSlice(newPositions, 1);
+}
+
+void permuteM2(void)
+{
+    // swap centers in following order:
+    // 2->3 | 3->2 | 1->0 | 0->1 |
+    char temp;
+
+    temp = centers[2];
+    centers[2] = centers[3];
+    centers[3] = temp;
+
+    temp = centers[1];
+    centers[1] = centers[0];
+    centers[0] = temp;
+
+    // swap edges
+    int newPositions[4] = {10, 8, 2, 0};
+
+    permuteCycleSlice(newPositions, 0);
+}
+    
 
 
 
