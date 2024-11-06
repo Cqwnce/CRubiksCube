@@ -9,23 +9,13 @@
 
 #define MAX_SIZE 10
 
-// define cubies object, initialise all cubies to solved state
-Cubie corners[8] =
-    {
-        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}
-    };
+// define cubies object
+Cubie corners[8];
+Cubie edges[12];
+// centers of each face
+char centers[6];
 
-Cubie edges[12] =
-    {
-        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}
-    };
-
-// centers of each face, initialised to solved state
-char centers[6] =
-    {
-        'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
-};
-
+// clear overflow input from fgets
 void clear_input_buffer()
 {
     char c;
@@ -34,6 +24,9 @@ void clear_input_buffer()
 
 int main(void)
 {
+    // reset cube and initialise to solved state
+    resetCube();
+
     printCube();
 
     char input[MAX_SIZE];
@@ -44,7 +37,6 @@ int main(void)
 
     while (1) 
     {
-
         printf("Input a move to perform. (Type \"help\" for list of inputs): ");
     
         if (fgets(input, MAX_SIZE, stdin) != NULL)
@@ -257,7 +249,6 @@ void printThirdRow(int face)
             break;
         };
     };
-
 }
 
 void printCube(void)
