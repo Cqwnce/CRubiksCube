@@ -471,15 +471,24 @@ void scrambleCube(void)
 
 void resetCube(void)
 {
+    // reset corners
     for (int i = 0; i < 8; i++)
     {
         corners[i].position = i;
         corners[i].orientation = 0;
     }
 
+    // reset edges
     for (int j = 0; j < 12; j++)
     {
         edges[j].position = j;
         edges[j].orientation = 0;
+    }
+
+    // reset centers
+    char defaultCenters[6] = {'y', 'w', 'g', 'b', 'r', 'o'};
+    for (int k = 0; k < 6; k++)
+    {
+        centers[k] = defaultCenters[k];
     }
 }
