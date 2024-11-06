@@ -6,6 +6,8 @@
 
 #include "header.h"
 
+#define MAX_SIZE 10
+
 // define cubies object, initialise all cubies to solved state
 Cubie corners[8] =
     {
@@ -23,21 +25,43 @@ char centers[6] =
         'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
 };
 
+void clear_input_buffer()
+{
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
 
 int main(void)
 {
     printCube();
 
-    char input[10];
+    char input[MAX_SIZE];
 
     while (1) 
     {
+
         printf("Input a move to perform. (Type \"help\" for list of inputs): ");
-        fgets(input, sizeof(input), stdin);
+    
+        if (fgets(input, MAX_SIZE, stdin) != NULL)
+        {
+            size_t length = strlen(input);
 
-        // Remove newline character
-        input[strcspn(input, "\n")] = 0;
+            // Check if input exceed max size and is truncated
+            if (length == MAX_SIZE - 1 && input[length - 1] != '\n')
+            {
+                printf("Invalid input.\n");
+                clear_input_buffer();
+                continue;
+            }
+            else
+            {
+                // Remove newline character
+                input[strcspn(input, "\n")] = 0;
+            }
+        }
 
+        size_t inputLength = strlen(input);
+        
         if (strcmp(input, "help") == 0) 
         {
             printf("\n--------------------------------\n");
@@ -56,13 +80,13 @@ int main(void)
             break; // Exit the loop
         }
 
-        if (strlen(input) == 1)
+        if (inputLength == 1)
         {
             performMovesets(toupper(input[0]), '\0');
             printCube();
             continue;
         } 
-        else if (strlen(input) == 2)
+        else if (inputLength == 2)
         {
             if (input[1] == '2' || input[1] == '\'')
             {
