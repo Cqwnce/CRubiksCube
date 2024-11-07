@@ -41,9 +41,8 @@ extern char centers[6];
 void printCube(void);
 void performMovesets(char move, char modifier);
 bool checkSolved(void);
-void resetCube(void);
 void scrambleCube(void);
-
+void resetCube(void);
 
 // stickers.c
 char getCornerSticker(int cornerIndex, int stickerOrientation);
