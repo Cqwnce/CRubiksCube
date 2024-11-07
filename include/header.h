@@ -19,6 +19,15 @@ typedef struct
     int orientation; // 0,1,2 for corners| 0,1 for edges
 } Cubie;
 
+// struct for changing cubie position and orientation
+typedef struct
+{
+    int newCornerPositions[4];
+    int newCornerOrientations[4];
+    int newEdgePositions[4];
+    int newEdgeOrientations[4];
+} permuteIndex;
+
 // Declare external arrays
 extern int corner_positions[6][4];
 extern int edge_positions[6][4];
@@ -70,9 +79,6 @@ void permuteM(void);
 void permuteMprime(void);
 void permuteM2(void);
 
-void permuteCycle(int newCornerPositions[4], int newEdgePositions[4], int face,
-        int newCornerOrientations[4], int newEdgeOrientations[4]);
-bool checkModified(int modifiedCubies[4], int j);
-
+void permuteCycle(const permuteIndex *perm, int face);
 
 #endif
