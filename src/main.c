@@ -3,28 +3,19 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "header.h"
 
 #define MAX_SIZE 10
 
-// define cubies object, initialise all cubies to solved state
-Cubie corners[8] =
-    {
-        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}
-    };
+// define cubies object
+Cubie corners[8];
+Cubie edges[12];
+// centers of each face
+char centers[6];
 
-Cubie edges[12] =
-    {
-        {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}
-    };
-
-// centers of each face, initialised to solved state
-char centers[6] =
-    {
-        'y', 'w', 'g', 'b', 'r', 'o' // U, D, F, B, L, R
-};
-
+// clear overflow input from fgets
 void clear_input_buffer()
 {
     char c;
@@ -33,13 +24,19 @@ void clear_input_buffer()
 
 int main(void)
 {
+    // reset cube and initialise to solved state
+    resetCube();
+
     printCube();
 
     char input[MAX_SIZE];
+    int moves_number;
+
+    // Intialise cube to be not scrambled
+    bool scrambled = false;
 
     while (1) 
     {
-
         printf("Input a move to perform. (Type \"help\" for list of inputs): ");
     
         if (fgets(input, MAX_SIZE, stdin) != NULL)
@@ -70,7 +67,9 @@ int main(void)
             printf("(') for counterclockwise e.g. F'.\n");
             printf("(2) for 2 moves e.g. F2.\n");
             printf("\nMiscellaneous:\n");
-            printf("(end) for quitting program.\n");
+            printf("(end) to quit program.\n");
+            printf("(scramble) to scrambling cube to solve.\n");
+            printf("(reset) to reset cube to solved state.\n");
             printf("--------------------------------\n\n");
             continue; // Prompt for input again
         }
@@ -80,10 +79,32 @@ int main(void)
             break; // Exit the loop
         }
 
+        if (strcmp(input, "scramble") == 0)
+        {
+            scrambleCube();
+            scrambled = true;
+            printCube();
+            continue;
+        }
+
+        if (strcmp(input, "reset") == 0)
+        {
+            resetCube();
+            printCube();
+            continue;
+        }
+
         if (inputLength == 1)
         {
             performMovesets(toupper(input[0]), '\0');
             printCube();
+
+            if (checkSolved() == true && scrambled == true)
+            {
+                // only print "Cube solved" if cube was scrambled using command
+                printf("Cube solved!\n");
+                scrambled = false;
+            }
             continue;
         } 
         else if (inputLength == 2)
@@ -92,6 +113,12 @@ int main(void)
             {
                 performMovesets(toupper(input[0]), input[1]);
                 printCube();
+                if (checkSolved() == true && scrambled == true)
+                {
+                    // only print "Cube solved" if cube was scrambled using command
+                    printf("Cube solved!\n");
+                    scrambled = false;
+                }
                 continue;
             }
         }
@@ -222,7 +249,6 @@ void printThirdRow(int face)
             break;
         };
     };
-
 }
 
 void printCube(void)
@@ -390,3 +416,70 @@ void performMovesets(char move, char modifier)
     };
 }
 
+bool checkSolved(void)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        // return not solved if any corners not solved
+        if (corners[i].position != i || corners[i].orientation != 0)
+        {
+            return false;
+        }
+    }
+
+    for (int j = 0; j < 12; j++)
+    {
+        // return not solved if any edges not solved
+        if (edges[j].position != j || edges[j].orientation != 0)
+        {
+            return false;
+        }
+    }
+
+    // else, return true
+    return true;
+}
+
+void scrambleCube(void)
+{
+    // randomise movesets to scramble cube
+    srand(time(NULL));
+
+    // number of moves to be performed randomly
+    unsigned int movesetNumber = 20;
+
+    char moves[6] = {'U', 'D', 'L', 'R', 'B', 'F'};
+    char modifiers[3] = {'2', '\'', '\0'};
+
+    for (int i = 0; i < movesetNumber; i++)
+    {
+        int random_move = rand() % 6;
+        int random_modifier = rand() % 3;
+
+        performMovesets(moves[random_move], moves[random_modifier]);
+    }
+}
+
+void resetCube(void)
+{
+    // reset corners
+    for (int i = 0; i < 8; i++)
+    {
+        corners[i].position = i;
+        corners[i].orientation = 0;
+    }
+
+    // reset edges
+    for (int j = 0; j < 12; j++)
+    {
+        edges[j].position = j;
+        edges[j].orientation = 0;
+    }
+
+    // reset centers
+    char defaultCenters[6] = {'y', 'w', 'g', 'b', 'r', 'o'};
+    for (int k = 0; k < 6; k++)
+    {
+        centers[k] = defaultCenters[k];
+    }
+}
