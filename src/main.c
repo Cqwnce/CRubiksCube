@@ -254,49 +254,66 @@ void printThirdRow(int face)
 void printCube(void)
 {
     // 0 indexed face, U
-    printf("      ");
+    printf("        +-------+\n");
+    printf("        | ");
     printFirstRow(0);
-    printf("\n");
-    printf("      ");
+    printf("|\n");
+    printf("        | ");
     printSecondRow(0);
-    printf("\n");
-    printf("      ");
+    printf("|\n");
+    printf("        | ");
     printThirdRow(0);
-    printf("\n");
+    printf("|\n");
 
     // 4, 2, 5, 3 face (L, F, R, B)
+    
+    // formatting
+    printf("+-------+-------+-------+-------+\n");
 
     // First row
+    printf("| ");
     printFirstRow(4);
+    printf("| ");
     printFirstRow(2);
+    printf("| ");
     printFirstRow(5);
+    printf("| ");
     printFirstRow(3);
-    printf("\n");
+    printf("|\n");
 
     // Second row
+    printf("| ");
     printSecondRow(4);
+    printf("| ");
     printSecondRow(2);
+    printf("| ");
     printSecondRow(5);
+    printf("| ");
     printSecondRow(3);
-    printf("\n");
+    printf("|\n");
 
     // Third row
+    printf("| ");
     printThirdRow(4);
+    printf("| ");
     printThirdRow(2);
+    printf("| ");
     printThirdRow(5);
+    printf("| ");
     printThirdRow(3);
-    printf("\n");
+    printf("|\n");
+    printf("+-------+-------+-------+-------+\n");
 
     // 1 indexed face, D
-    printf("      ");
+    printf("        | ");
     printFirstRow(1);
-    printf("\n");
-    printf("      ");
+    printf("|\n");
+    printf("        | ");
     printSecondRow(1);
-    printf("\n");
-    printf("      ");
+    printf("|\n");
+    printf("        | ");
     printThirdRow(1);
-    printf("\n");
+    printf("|\n        +-------+\n");
 }
 
 void performMovesets(char move, char modifier)
