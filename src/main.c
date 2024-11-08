@@ -96,8 +96,8 @@ int main(void)
 
         if (inputLength == 1)
         {
-            performMovesets(toupper(input[0]), '\0');
-            printCube();
+            // only print cube if moveset succesfully performed
+            if(performMovesets(toupper(input[0]), '\0')) printCube();
 
             if (checkSolved() == true && scrambled == true)
             {
@@ -111,8 +111,9 @@ int main(void)
         {
             if (input[1] == '2' || input[1] == '\'')
             {
-                performMovesets(toupper(input[0]), input[1]);
-                printCube();
+                // only print cube if moveset succesfully performed
+                if(performMovesets(toupper(input[0]), input[1])) printCube();
+
                 if (checkSolved() == true && scrambled == true)
                 {
                     // only print "Cube solved" if cube was scrambled using command
@@ -316,7 +317,7 @@ void printCube(void)
     printf("|\n        +-------+\n");
 }
 
-void performMovesets(char move, char modifier)
+bool performMovesets(char move, char modifier)
 {
     // Switch case for face of move
     switch (move)
@@ -334,7 +335,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteF();
             }
-            break;
+            return true;
 
         case 'B':
             if (modifier == '2')
@@ -349,7 +350,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteB();
             }
-            break;
+            return true;
 
         case 'U':
             if (modifier == '2')
@@ -364,7 +365,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteU();
             }
-            break;
+            return true;
 
         case 'D':
             if (modifier == '2')
@@ -379,7 +380,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteD();
             }
-            break;
+            return true;
 
         case 'L':
             if (modifier == '2')
@@ -394,7 +395,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteL();
             }
-            break;
+            return true;
             
         case 'R':
             if (modifier == '2')
@@ -409,7 +410,7 @@ void performMovesets(char move, char modifier)
             {
                 permuteR();
             }
-            break;
+            return true;
 
         case 'M':
             if (modifier == '2')
@@ -424,12 +425,12 @@ void performMovesets(char move, char modifier)
             {
                 permuteM();
             }
-            break;
+            return true;
 
 
         default:
             printf("Invalid move.\n");
-            break;
+            return false;
     };
 }
 
