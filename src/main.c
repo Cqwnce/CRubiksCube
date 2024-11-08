@@ -484,7 +484,7 @@ void scrambleCube(void)
         int random_move = rand() % 6;
         int random_modifier = rand() % 3;
 
-        performMovesets(moves[random_move], moves[random_modifier]);
+        performMovesets(moves[random_move], modifiers[random_modifier]);
     }
 }
 
