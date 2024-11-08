@@ -39,7 +39,7 @@ extern char centers[6];
 
 // main.c
 void printCube(void);
-void performMovesets(char move, char modifier);
+bool performMovesets(char move, char modifier);
 bool checkSolved(void);
 void scrambleCube(void);
 void resetCube(void);
