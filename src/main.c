@@ -453,6 +453,16 @@ bool checkSolved(void)
         }
     }
 
+    char defaultCenters[6] = {'y', 'w', 'g', 'b', 'r', 'o'};
+    for (int k = 0; k < 6; k++)
+    {
+        // return not solved if any centers not in default position
+        if (centers[k] != defaultCenters[k])
+        {
+            return false;
+        }
+    }
+
     // else, return true
     return true;
 }
